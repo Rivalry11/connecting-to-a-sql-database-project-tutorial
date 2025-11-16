@@ -1,15 +1,18 @@
-import os
+import sqlite3
 import pandas as pd
-from sqlalchemy import create_engine, text
-from dotenv import load_dotenv
 
-# Load environment variables
+con = sqlite3.connect("Test.DB")
 
-# 1) Connect to the database with SQLAlchemy
+con.execute("CREATE TABLE movies(id INT PRIMARY KEY NOT NULL, title TEXT NOT NULL, year INT NOT NULL)")
 
-# 2) Create the tables
+con.execute("INSERT INTO movies VALUES (1, 'Titanic', 1997)")
+con.execute("INSERT INTO movies VALUES (2, 'The Godfather', 1972)")
+con.execute("INSERT INTO movies VALUES (3, 'Gladiator 2', 2025)")
+con.commit()
 
-# 3) Insert data
+cursor = con.execute("SELECT * FROM movies WHERE year > 1990")
 
-# 4) Use Pandas to read and display a table
+for row in cursor:
+  print(f'Title:{row[1]}, Year:{row[2]}')
 
+con.close()
